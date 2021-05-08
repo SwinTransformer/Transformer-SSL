@@ -8,6 +8,7 @@
 import os
 import torch
 import numpy as np
+from PIL import ImageFilter, ImageOps
 import torch.distributed as dist
 from torchvision import datasets, transforms
 from timm.data.constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
@@ -79,8 +80,10 @@ def build_dataset(is_train, config):
             dataset = CachedImageFolder(config.DATA.DATA_PATH, ann_file, prefix, transform,
                                         cache_mode=config.DATA.CACHE_MODE if is_train else 'part')
         else:
-            root = os.path.join(config.DATA.DATA_PATH, prefix)
-            dataset = datasets.ImageFolder(root, transform=transform)
+            # ToDo: fix build_dataset without zip_mode
+            raise NotImplementedError
+            # root = os.path.join(config.DATA.DATA_PATH, prefix)
+            # dataset = datasets.ImageFolder(root, transform=transform)
         nb_classes = 1000
     else:
         raise NotImplementedError("We only support ImageNet Now.")
@@ -89,6 +92,54 @@ def build_dataset(is_train, config):
 
 
 def build_transform(is_train, config):
+    if config.AUG.SSL_AUG:
+        if config.AUG.SSL_AUG_TYPE == 'byol':
+            normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+            
+            transform_1 = transforms.Compose([
+                transforms.RandomResizedCrop(config.DATA.IMG_SIZE, scale=(config.AUG.SSL_AUG_CROP, 1.)),
+                transforms.RandomHorizontalFlip(),
+                transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.2, 0.1)], p=0.8),
+                transforms.RandomGrayscale(p=0.2),
+                transforms.RandomApply([GaussianBlur()], p=1.0),
+                transforms.ToTensor(),
+                normalize,
+            ])
+            transform_2 = transforms.Compose([
+                transforms.RandomResizedCrop(config.DATA.IMG_SIZE, scale=(config.AUG.SSL_AUG_CROP, 1.)),
+                transforms.RandomHorizontalFlip(),
+                transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.2, 0.1)], p=0.8),
+                transforms.RandomGrayscale(p=0.2),
+                transforms.RandomApply([GaussianBlur()], p=0.1),
+                transforms.RandomApply([ImageOps.solarize], p=0.2),
+                transforms.ToTensor(),
+                normalize,
+            ])
+            
+            transform = (transform_1, transform_2)
+            return transform
+        else:
+            raise NotImplementedError
+    
+    if config.AUG.SSL_LINEAR_AUG:
+        normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        
+        if is_train:
+            transform = transforms.Compose([
+                transforms.RandomResizedCrop(config.DATA.IMG_SIZE),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                normalize,
+            ])
+        else:
+            transform = transforms.Compose([
+                transforms.Resize(config.DATA.IMG_SIZE + 32),
+                transforms.CenterCrop(config.DATA.IMG_SIZE),
+                transforms.ToTensor(),
+                normalize,
+            ])
+        return transform
+    
     resize_im = config.DATA.IMG_SIZE > 32
     if is_train:
         # this should always dispatch to transforms_imagenet_train
@@ -126,3 +177,12 @@ def build_transform(is_train, config):
     t.append(transforms.ToTensor())
     t.append(transforms.Normalize(IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD))
     return transforms.Compose(t)
+
+
+class GaussianBlur(object):
+    """Gaussian Blur version 2"""
+
+    def __call__(self, x):
+        sigma = np.random.uniform(0.1, 2.0)
+        x = x.filter(ImageFilter.GaussianBlur(radius=sigma))
+        return x

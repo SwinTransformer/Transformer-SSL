@@ -231,6 +231,8 @@ class CachedImageFolder(DatasetFolder):
                                                 transform=transform, target_transform=target_transform,
                                                 cache_mode=cache_mode)
         self.imgs = self.samples
+        if not isinstance(self.transform, (tuple, list)) and self.transform is not None:
+            self.transform = [self.transform]
 
     def __getitem__(self, index):
         """
@@ -241,11 +243,15 @@ class CachedImageFolder(DatasetFolder):
         """
         path, target = self.samples[index]
         image = self.loader(path)
+        
+        ret = []
         if self.transform is not None:
-            img = self.transform(image)
+            for t in self.transform:
+                ret.append(t(image))
         else:
-            img = image
+            ret.append(image)
         if self.target_transform is not None:
             target = self.target_transform(target)
+        ret.append(target)
 
-        return img, target
+        return ret

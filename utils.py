@@ -3,6 +3,7 @@
 # Copyright (c) 2021 Microsoft
 # Licensed under The MIT License [see LICENSE for details]
 # Written by Ze Liu
+# Modified by Zhenda Xie
 # --------------------------------------------------------
 
 import os
@@ -14,6 +15,23 @@ try:
     from apex import amp
 except ImportError:
     amp = None
+
+
+def load_pretrained(model, ckpt_path, logger):
+    model_dict = model.state_dict()
+    
+    state_dict = torch.load(ckpt_path, map_location='cpu')['model']
+    state_dict = {k.replace('encoder.', ''): v for k, v in state_dict.items() if 'encoder.' in k}
+    
+    for k in model_dict.keys():
+        if 'head' in k:
+            state_dict[k] = model_dict[k]
+    
+    missing_keys, unexpected_keys = model.load_state_dict(state_dict, strict=False)
+    
+    logger.info(f'loaded pretrained checkpoint from: {ckpt_path}')
+    if len(missing_keys) > 0 or len(unexpected_keys) > 0:
+        logger.warning(f'Missing keys: {missing_keys}\nUnexpected keys: {unexpected_keys}')
 
 
 def load_checkpoint(config, model, optimizer, lr_scheduler, logger):
@@ -56,6 +74,7 @@ def save_checkpoint(config, epoch, model, max_accuracy, optimizer, lr_scheduler,
     save_path = os.path.join(config.OUTPUT, f'ckpt_epoch_{epoch}.pth')
     logger.info(f"{save_path} saving......")
     torch.save(save_state, save_path)
+    torch.save(save_state, os.path.join(config.OUTPUT, f'checkpoint.pth'))
     logger.info(f"{save_path} saved !!!")
 
 
@@ -73,6 +92,9 @@ def get_grad_norm(parameters, norm_type=2):
 
 
 def auto_resume_helper(output_dir):
+    if os.path.exists(os.path.join(output_dir, 'checkpoint.pth')):
+        return os.path.join(output_dir, 'checkpoint.pth')
+    
     checkpoints = os.listdir(output_dir)
     checkpoints = [ckpt for ckpt in checkpoints if ckpt.endswith('pth')]
     print(f"All checkpoints founded in {output_dir}: {checkpoints}")

@@ -71,6 +71,16 @@ _C.MODEL.SWIN.QK_SCALE = None
 _C.MODEL.SWIN.APE = False
 _C.MODEL.SWIN.PATCH_NORM = True
 
+# MoBY parameters
+_C.MODEL.MOBY = CN()
+_C.MODEL.MOBY.ONLINE_DROP_PATH_RATE = 0.1
+_C.MODEL.MOBY.TARGET_DROP_PATH_RATE = 0.0
+_C.MODEL.MOBY.CONTRAST_MOMENTUM = 0.99
+_C.MODEL.MOBY.CONTRAST_TEMPERATURE = 0.2
+_C.MODEL.MOBY.CONTRAST_NUM_NEGATIVE = 4096
+_C.MODEL.MOBY.PROJ_NUM_LAYERS = 2
+_C.MODEL.MOBY.PRED_NUM_LAYERS = 2
+
 # -----------------------------------------------------------------------------
 # Training settings
 # -----------------------------------------------------------------------------
@@ -112,6 +122,12 @@ _C.TRAIN.OPTIMIZER.BETAS = (0.9, 0.999)
 _C.TRAIN.OPTIMIZER.MOMENTUM = 0.9
 
 # -----------------------------------------------------------------------------
+# Linear eval settings
+# -----------------------------------------------------------------------------
+_C.LINEAR_EVAL = CN()
+_C.LINEAR_EVAL.PRETRAINED = ''
+
+# -----------------------------------------------------------------------------
 # Augmentation settings
 # -----------------------------------------------------------------------------
 _C.AUG = CN()
@@ -137,6 +153,14 @@ _C.AUG.MIXUP_PROB = 1.0
 _C.AUG.MIXUP_SWITCH_PROB = 0.5
 # How to apply mixup/cutmix params. Per "batch", "pair", or "elem"
 _C.AUG.MIXUP_MODE = 'batch'
+# Self-Supervised Learning Augmentation
+_C.AUG.SSL_AUG = False
+# SSL-Aug type
+_C.AUG.SSL_AUG_TYPE = 'byol'
+# SSL-Aug crop
+_C.AUG.SSL_AUG_CROP = 0.08
+# Self-Supervised Learning Linear Evaluation Augmentation
+_C.AUG.SSL_LINEAR_AUG = False
 
 # -----------------------------------------------------------------------------
 # Testing settings

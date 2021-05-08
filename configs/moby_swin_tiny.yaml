@@ -1,0 +1,18 @@
+AUG:
+  SSL_AUG: True
+MODEL:
+  TYPE: moby
+  NAME: moby__swin_tiny__patch4_window7_224__odpr01_tdpr0_cm099_ct02_queue4096_proj2_pred2
+  SWIN:
+    EMBED_DIM: 96
+    DEPTHS: [ 2, 2, 6, 2 ]
+    NUM_HEADS: [ 3, 6, 12, 24 ]
+    WINDOW_SIZE: 7
+  MOBY:
+    ONLINE_DROP_PATH_RATE: 0.1
+    TARGET_DROP_PATH_RATE: 0.0
+    CONTRAST_MOMENTUM: 0.99
+    CONTRAST_TEMPERATURE: 0.2
+    CONTRAST_NUM_NEGATIVE: 4096
+    PROJ_NUM_LAYERS: 2
+    PRED_NUM_LAYERS: 2
