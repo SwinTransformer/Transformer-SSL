@@ -1,15 +1,20 @@
+TRAIN:
+  WARMUP_EPOCHS: 5
+  EPOCHS: 300
+  BASE_LR: 0.001
+  WEIGHT_DECAY: 0.05
 AUG:
   SSL_AUG: True
 MODEL:
   TYPE: moby
-  NAME: moby__swin_tiny__patch4_window7_224__odpr01_tdpr0_cm099_ct02_queue4096_proj2_pred2
+  NAME: moby__swin_tiny__patch4_window7_224__odpr02_tdpr0_cm099_ct02_queue4096_proj2_pred2
   SWIN:
     EMBED_DIM: 96
     DEPTHS: [ 2, 2, 6, 2 ]
     NUM_HEADS: [ 3, 6, 12, 24 ]
     WINDOW_SIZE: 7
   MOBY:
-    ONLINE_DROP_PATH_RATE: 0.1
+    ONLINE_DROP_PATH_RATE: 0.2
     TARGET_DROP_PATH_RATE: 0.0
     CONTRAST_MOMENTUM: 0.99
     CONTRAST_TEMPERATURE: 0.2
