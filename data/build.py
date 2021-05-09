@@ -3,6 +3,7 @@
 # Copyright (c) 2021 Microsoft
 # Licensed under The MIT License [see LICENSE for details]
 # Written by Ze Liu
+# Modified by Zhenda Xie
 # --------------------------------------------------------
 
 import os
@@ -17,6 +18,7 @@ from timm.data import create_transform
 from timm.data.transforms import _pil_interp
 
 from .cached_image_folder import CachedImageFolder
+from .custom_image_folder import CustomImageFolder
 from .samplers import SubsetRandomSampler
 
 
@@ -80,10 +82,9 @@ def build_dataset(is_train, config):
             dataset = CachedImageFolder(config.DATA.DATA_PATH, ann_file, prefix, transform,
                                         cache_mode=config.DATA.CACHE_MODE if is_train else 'part')
         else:
-            # ToDo: fix build_dataset without zip_mode
-            raise NotImplementedError
-            # root = os.path.join(config.DATA.DATA_PATH, prefix)
-            # dataset = datasets.ImageFolder(root, transform=transform)
+            # ToDo: test custom_image_folder
+            root = os.path.join(config.DATA.DATA_PATH, prefix)
+            dataset = CustomImageFolder(root, transform=transform)
         nb_classes = 1000
     else:
         raise NotImplementedError("We only support ImageNet Now.")

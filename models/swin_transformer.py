@@ -181,7 +181,7 @@ class SwinTransformerBlock(nn.Module):
 
     def __init__(self, dim, input_resolution, num_heads, window_size=7, shift_size=0,
                  mlp_ratio=4., qkv_bias=True, qk_scale=None, drop=0., attn_drop=0., drop_path=0.,
-                 act_layer=nn.GELU, norm_layer=nn.LayerNorm):
+                 act_layer=nn.GELU, norm_layer=nn.LayerNorm, norm_before_mlp='ln'):
         super().__init__()
         self.dim = dim
         self.input_resolution = input_resolution
@@ -189,6 +189,7 @@ class SwinTransformerBlock(nn.Module):
         self.window_size = window_size
         self.shift_size = shift_size
         self.mlp_ratio = mlp_ratio
+        self.norm_before_mlp = norm_before_mlp
         if min(self.input_resolution) <= self.window_size:
             # if window size is larger than input resolution, we don't partition windows
             self.shift_size = 0
@@ -201,7 +202,12 @@ class SwinTransformerBlock(nn.Module):
             qkv_bias=qkv_bias, qk_scale=qk_scale, attn_drop=attn_drop, proj_drop=drop)
 
         self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
-        self.norm2 = norm_layer(dim)
+        if self.norm_before_mlp == 'ln':
+            self.norm2 = nn.LayerNorm(dim)
+        elif self.norm_before_mlp == 'bn':
+            self.norm2 = lambda x: nn.BatchNorm1d(dim)(x.transpose(1, 2)).transpose(1, 2)
+        else:
+            raise NotImplementedError
         mlp_hidden_dim = int(dim * mlp_ratio)
         self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
 
@@ -359,7 +365,8 @@ class BasicLayer(nn.Module):
 
     def __init__(self, dim, input_resolution, depth, num_heads, window_size,
                  mlp_ratio=4., qkv_bias=True, qk_scale=None, drop=0., attn_drop=0.,
-                 drop_path=0., norm_layer=nn.LayerNorm, downsample=None, use_checkpoint=False):
+                 drop_path=0., norm_layer=nn.LayerNorm, downsample=None, use_checkpoint=False,
+                 norm_before_mlp='ln'):
 
         super().__init__()
         self.dim = dim
@@ -376,7 +383,7 @@ class BasicLayer(nn.Module):
                                  qkv_bias=qkv_bias, qk_scale=qk_scale,
                                  drop=drop, attn_drop=attn_drop,
                                  drop_path=drop_path[i] if isinstance(drop_path, list) else drop_path,
-                                 norm_layer=norm_layer)
+                                 norm_layer=norm_layer, norm_before_mlp=norm_before_mlp)
             for i in range(depth)])
 
         # patch merging layer
@@ -486,7 +493,7 @@ class SwinTransformer(nn.Module):
                  window_size=7, mlp_ratio=4., qkv_bias=True, qk_scale=None,
                  drop_rate=0., attn_drop_rate=0., drop_path_rate=0.1,
                  norm_layer=nn.LayerNorm, ape=False, patch_norm=True,
-                 use_checkpoint=False, **kwargs):
+                 use_checkpoint=False, norm_before_mlp='ln', **kwargs):
         super().__init__()
 
         self.num_classes = num_classes
@@ -530,7 +537,8 @@ class SwinTransformer(nn.Module):
                                drop_path=dpr[sum(depths[:i_layer]):sum(depths[:i_layer + 1])],
                                norm_layer=norm_layer,
                                downsample=PatchMerging if (i_layer < self.num_layers - 1) else None,
-                               use_checkpoint=use_checkpoint)
+                               use_checkpoint=use_checkpoint,
+                               norm_before_mlp=norm_before_mlp)
             self.layers.append(layer)
 
         self.norm = norm_layer(self.num_features)

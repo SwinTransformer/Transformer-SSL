@@ -1,28 +1,19 @@
-# Swin Transformer for Image Classification
+# MoBY with Swin Transformer, Self-Supervised Pre-training and ImageNet-1K Linear Evaluation
 
-This folder contains the implementation of the Swin Transformer for image classification.
+This folder contains the implementation of the `MoBY` with `Swin Transformer` for image classification.
 
 ## Model Zoo
 
-### Regular ImageNet-1K trained models
+### ImageNet-1K Linear Evaluation Results
 
-| name | resolution |acc@1 | acc@5 | #params | FLOPs | model |
-|:---:|:---:|:---:|:---:| :---:| :---:|:---:|
-| Swin-T | 224x224 | 81.2 | 95.5 | 28M | 4.5G | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_tiny_patch4_window7_224.pth)/[baidu](https://pan.baidu.com/s/156nWJy4Q28rDlrX-rRbI3w) |
-| Swin-S | 224x224 | 83.2 | 96.2 | 50M | 8.7G | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_small_patch4_window7_224.pth)/[baidu](https://pan.baidu.com/s/1KFjpj3Efey3LmtE1QqPeQg) |
-| Swin-B | 224x224 | 83.5 | 96.5 | 88M | 15.4G | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_base_patch4_window7_224.pth)/[baidu](https://pan.baidu.com/s/16bqCTEc70nC_isSsgBSaqQ) |
-| Swin-B | 384x384 | 84.5 | 97.0 | 88M | 47.1G | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_base_patch4_window12_384.pth)/[baidu](https://pan.baidu.com/s/1xT1cu740-ejW7htUdVLnmw) |
+|      Method      | Architecture | Epochs | Params | FLOPs | img/s | Top-1 Accuracy | Checkpoint |
+| :--------------: | :----------: | :----: | :----: | :---: | :---: | :------------: | :--------: |
+|    Supervised    |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      81.2      |            |
+|       MoBY       |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      70.9      |            |
+| MoBY<sup>1</sup> |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      72.0      |            |
+|       MoBY       |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      75.0      |            |
 
-### ImageNet-22K pre-trained models
-
-| name | resolution |acc@1 | acc@5 | #params | FLOPs | 22K model | 1K model |
-|:---: |:---: |:---:|:---:|:---:|:---:|:---:|:---:|
-| Swin-B | 224x224 | 85.2 | 97.5 | 88M | 15.4G | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_base_patch4_window7_224_22k.pth)/[baidu](https://pan.baidu.com/s/1y1Ec3UlrKSI8IMtEs-oBXA) | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_base_patch4_window7_224_22kto1k.pth)/[baidu](https://pan.baidu.com/s/1n_wNkcbRxVXit8r_KrfAVg) |
-| Swin-B | 384x384 | 86.4 | 98.0 | 88M | 47.1G | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_base_patch4_window12_384_22k.pth)/[baidu](https://pan.baidu.com/s/1vwJxnJcVqcLZAw9HaqiR6g) | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_base_patch4_window12_384_22kto1k.pth)/[baidu](https://pan.baidu.com/s/1caKTSdoLJYoi4WBcnmWuWg) |
-| Swin-L | 224x224 | 86.3 | 97.9 | 197M | 34.5G | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_large_patch4_window7_224_22k.pth)/[baidu](https://pan.baidu.com/s/1pws3rOTFuOebBYP3h6Kx8w) | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_large_patch4_window7_224_22kto1k.pth)/[baidu](https://pan.baidu.com/s/1NkQApMWUhxBGjk1ne6VqBQ) |
-| Swin-L | 384x384 | 87.3 | 98.2 | 197M | 103.9G | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_large_patch4_window12_384_22k.pth)/[baidu](https://pan.baidu.com/s/1sl7o_bJA143OD7UqSLAMoA) | [github](https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_large_patch4_window12_384_22kto1k.pth)/[baidu](https://pan.baidu.com/s/1X0FLHQyPOC6Kmv2CmgxJvA) |
-
-Note: access code for `baidu` is `swin`.
+- <sup>1</sup> denotes the result of MoBY which has adopted a trick from MoCo v3 that replace theLayerNorm layers before the MLP blocks by BatchNorm.
 
 ## Usage
 
@@ -31,15 +22,15 @@ Note: access code for `baidu` is `swin`.
 - Clone this repo:
 
 ```bash
-git clone https://github.com/microsoft/Swin-Transformer.git
-cd Swin-Transformer
+git clone https://github.com/Swin-Transformer/Transformer-SSL
+cd Transformer-SSL
 ```
 
 - Create a conda virtual environment and activate it:
 
 ```bash
-conda create -n swin python=3.7 -y
-conda activate swin
+conda create -n transformer-ssl python=3.7 -y
+conda activate transformer-ssl
 ```
 
 - Install `CUDA==10.1` with `cudnn7` following
@@ -67,18 +58,17 @@ pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp
 - Install other requirements:
 
 ```bash
-pip install opencv-python==4.4.0.46 termcolor==1.1.0 yacs==0.1.8
+pip install opencv-python==4.4.0.46 termcolor==1.1.0 yacs==0.1.8 diffdist
 ```
 
 ### Data preparation
 
-We use standard ImageNet dataset, you can download it from http://image-net.org/. We provide the following two ways to
-load data:
+We use standard ImageNet dataset, you can download it from http://image-net.org/. We provide the following two ways to load data:
 
 - For standard folder dataset, move validation images to labeled sub-folders. The file structure should look like:
   ```bash
   $ tree data
-  imagenet
+  imagenet 
   ├── train
   │   ├── class1
   │   │   ├── img1.jpeg
@@ -129,30 +119,16 @@ load data:
   n01440764/n01440764_10042.JPEG	0
   ```
 
-### Evaluation
+### Self-Supervised Pre-training
 
-To evaluate a pre-trained `Swin Transformer` on ImageNet val, run:
-
-```bash
-python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345 main.py --eval \
---cfg <config-file> --resume <checkpoint> --data-path <imagenet-path> 
-```
-
-For example, to evaluate the `Swin-B` with a single GPU:
+To train `MoBY` with `Swin Transformer` on ImageNet, run:
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
---cfg configs/swin_base_patch4_window7_224.yaml --resume swin_base_patch4_window7_224.pth --data-path <imagenet-path>
-```
-
-### Training from scratch
-
-To train a `Swin Transformer` on ImageNet from scratch, run:
-
-```bash
-python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345  main.py \ 
+python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345 moby_main.py \ 
 --cfg <config-file> --data-path <imagenet-path> [--batch-size <batch-size-per-gpu> --output <output-directory> --tag <job-tag>]
 ```
+
+- Recommand using `--output` and `--tag` to tidy your experiments.
 
 **Notes**:
 
@@ -169,35 +145,47 @@ python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --maste
   `--opts TRAIN.EPOCHS 100 TRAIN.WARMUP_EPOCHS 5` will change total epochs to 100 and warm-up epochs to 5.
 - For additional options, see [config](config.py) and run `python main.py --help` to get detailed message.
 
-For example, to train `Swin Transformer` with 8 GPU on a single node for 300 epochs, run:
+For example, to train `MoBY` with `Swin Transformer` with 8 GPU on a single node for 300 epochs, run:
 
-`Swin-T`:
+`MoBY Swin-T`:
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345  main.py \
---cfg configs/swin_tiny_patch4_window7_224.yaml --data-path <imagenet-path> --batch-size 128 
+python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345  moby_main.py \
+--cfg configs/moby_swin_tiny.yaml --data-path <imagenet-path> --batch-size 64
 ```
 
-`Swin-S`:
+### Linear Evaluation
+
+To evaluate a pre-trained `MoBY` with `Swin Transformer` on ImageNet-1K linear evaluation, run:
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345  main.py \
---cfg configs/swin_small_patch4_window7_224.yaml --data-path <imagenet-path> --batch-size 128 
+python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345 moby_linear.py \
+--cfg <config-file> --data-path <imagenet-path>
+```
+**Notes**:
+
+- Make sure the `<config-file>`, `<output-directory>` and `<tag>` are the same as in the pre-training stage.
+- Note that some configurations are fixed in [`moby_linear.py`](moby_linear.py#L78) for simplicity.
+
+For example, to evaluate `MoBY Swin-T` with 8 GPU on a single node on ImageNet-1K linear evluation, run:
+
+```bash
+python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345  moby_linear.py \
+--cfg configs/moby_swin_tiny.yaml --data-path <imagenet-path> --batch-size 64
 ```
 
-`Swin-B`:
+### Evaluate
+
+To evaluate a `MoBY` with `Swin Transformer` trained model on ImageNet-1K linear evaluation, run:
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345  main.py \
---cfg configs/swin_base_patch4_window7_224.yaml --data-path <imagenet-path> --batch-size 64 \
---accumulation-steps 2 [--use-checkpoint]
+python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345 moby_linear.py \
+--cfg <config-file> --resume <checkpoint> --data-path <imagenet-path> --eval
 ```
 
-### Throughput
-
-To measure the throughput, run:
+For example, to evaluate the provided `MoBY Swin-T` with a single GPU:
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345  main.py \
---cfg <config-file> --data-path <imagenet-path> --batch-size 64 --throughput --amp-opt-level O0
+python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 moby_linear.py \
+--cfg configs/moby_swin_tiny.yaml --resume moby_swin_tiny_300ep.pth --data-path <imagenet-path> --eval
 ```

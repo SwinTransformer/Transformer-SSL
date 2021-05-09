@@ -31,7 +31,8 @@ def build_model(config):
             drop_path_rate=config.MODEL.DROP_PATH_RATE,
             ape=config.MODEL.SWIN.APE,
             patch_norm=config.MODEL.SWIN.PATCH_NORM,
-            use_checkpoint=config.TRAIN.USE_CHECKPOINT
+            use_checkpoint=config.TRAIN.USE_CHECKPOINT,
+            norm_before_mlp=config.MODEL.SWIN.NORM_BEFORE_MLP,
         )
 
     elif model_type == 'moby':
@@ -51,6 +52,7 @@ def build_model(config):
             ape=config.MODEL.SWIN.APE,
             patch_norm=config.MODEL.SWIN.PATCH_NORM,
             use_checkpoint=config.TRAIN.USE_CHECKPOINT,
+            norm_befor_mlp=config.MODEL.SWIN.NORM_BEFORE_MLP,
         )
         encoder = swin(
             num_classes=0,

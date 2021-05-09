@@ -59,6 +59,10 @@ class MoBY(nn.Module):
             param_k.data.copy_(param_q.data)
             param_k.requires_grad = False
 
+        if self.cfg.MODEL.SWIN.NORM_BEFORE_MLP == 'bn':
+            nn.SyncBatchNorm.convert_sync_batchnorm(self.encoder)
+            nn.SyncBatchNorm.convert_sync_batchnorm(self.encoder_k)
+
         nn.SyncBatchNorm.convert_sync_batchnorm(self.projector)
         nn.SyncBatchNorm.convert_sync_batchnorm(self.projector_k)
         nn.SyncBatchNorm.convert_sync_batchnorm(self.predictor)

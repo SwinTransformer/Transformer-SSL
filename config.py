@@ -19,7 +19,7 @@ _C.BASE = ['']
 # -----------------------------------------------------------------------------
 _C.DATA = CN()
 # Batch size for a single GPU, could be overwritten by command line argument
-_C.DATA.BATCH_SIZE = 128
+_C.DATA.BATCH_SIZE = 64
 # Path to dataset, could be overwritten by command line argument
 _C.DATA.DATA_PATH = ''
 # Dataset name
@@ -70,6 +70,8 @@ _C.MODEL.SWIN.QKV_BIAS = True
 _C.MODEL.SWIN.QK_SCALE = None
 _C.MODEL.SWIN.APE = False
 _C.MODEL.SWIN.PATCH_NORM = True
+# Normalization layers in SwinTransformerBlock before MLP, default: 'ln', choice: ['ln', 'bn']
+_C.MODEL.SWIN.NORM_BEFORE_MLP = 'ln'
 
 # MoBY parameters
 _C.MODEL.MOBY = CN()
