@@ -1,3 +1,10 @@
+# --------------------------------------------------------
+# Swin Transformer
+# Copyright (c) 2021 Microsoft
+# Licensed under The MIT License [see LICENSE for details]
+# Written by Zhenda Xie
+# --------------------------------------------------------
+
 import numpy as np
 
 import torch

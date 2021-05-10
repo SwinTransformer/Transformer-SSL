@@ -6,12 +6,12 @@ This folder contains the implementation of the `MoBY` with `Swin Transformer` fo
 
 ### ImageNet-1K Linear Evaluation Results
 
-|      Method      | Architecture | Epochs | Params | FLOPs | img/s | Top-1 Accuracy | Checkpoint |
-| :--------------: | :----------: | :----: | :----: | :---: | :---: | :------------: | :--------: |
-|    Supervised    |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      81.2      |            |
-|       MoBY       |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      70.9      |            |
-| MoBY<sup>1</sup> |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      72.0      |            |
-|       MoBY       |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      75.0      |            |
+|      Method      | Architecture | Epochs | Params | FLOPs | img/s | Top-1 Accuracy |                                                                                            Checkpoint                                                                                            |
+| :--------------: | :----------: | :----: | :----: | :---: | :---: | :------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|    Supervised    |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      81.2      |                                              [Here](https://github.com/microsoft/Swin-Transformer#main-results-on-imagenet-with-pretrained-models)                                               |
+|       MoBY       |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      70.9      |                                                                                             [TBA]()                                                                                              |
+| MoBY<sup>1</sup> |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      72.0      |                                                                                             [TBA]()                                                                                              |
+|       MoBY       |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      75.0      | [Pre-trained](https://drive.google.com/file/d/1PS1Q0tAnUfBWLRPxh9iUrinAxeq7Y--u/view?usp=sharing) / [Linear](https://drive.google.com/file/d/1gbQynZy07uXPO-c0tOLeyG1pQzlnVHx9/view?usp=sharing) |
 
 - <sup>1</sup> denotes the result of MoBY which has adopted a trick from MoCo v3 that replace theLayerNorm layers before the MLP blocks by BatchNorm.
 
@@ -143,7 +143,7 @@ python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --maste
       in [this page](https://pytorch.org/tutorials/intermediate/dist_tuto.html).
 - To change config options in general, you can use `--opts KEY1 VALUE1 KEY2 VALUE2`, e.g.,
   `--opts TRAIN.EPOCHS 100 TRAIN.WARMUP_EPOCHS 5` will change total epochs to 100 and warm-up epochs to 5.
-- For additional options, see [config](config.py) and run `python main.py --help` to get detailed message.
+- For additional options, see [config](config.py) and run `python moby_main.py --help` to get detailed message.
 
 For example, to train `MoBY` with `Swin Transformer` with 8 GPU on a single node for 300 epochs, run:
 
