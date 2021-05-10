@@ -176,16 +176,16 @@ python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345  moby_
 
 ### Evaluate
 
-To evaluate a `MoBY` with `Swin Transformer` trained model on ImageNet-1K linear evaluation, run:
+To evaluate a `MoBY` with `Swin Transformer` linear evaluation model on ImageNet-1K, run:
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345 moby_linear.py \
 --cfg <config-file> --resume <checkpoint> --data-path <imagenet-path> --eval
 ```
 
-For example, to evaluate the provided `MoBY Swin-T` with a single GPU:
+For example, to evaluate the provided `MoBY Swin-T` linear evaluation model with a single GPU:
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 moby_linear.py \
---cfg configs/moby_swin_tiny.yaml --resume moby_swin_tiny_300ep.pth --data-path <imagenet-path> --eval
+--cfg configs/moby_swin_tiny.yaml --resume moby_swin_t_300ep_linear.pth --data-path <imagenet-path> --eval
 ```
