@@ -1,10 +1,10 @@
-# Transformer Self-Supervised Learning
+# Self-Supervised Learning with Vision Transformers
 
 By [Zhenda Xie](https://github.com/zdaxie/)\*, [Yutong Lin](https://github.com/impiga)\*, [Zhuliang Yao](https://github.com/Howal), [Zheng Zhang](https://stupidzz.github.io/), [Qi Dai](https://www.microsoft.com/en-us/research/people/qid/), [Yue Cao](http://yue-cao.me) and [Han Hu](https://ancientmooner.github.io/)
 
-This repo is the official implementation of ["Self-Supervised Learning with Swin Transformers"](). It currently includes code and models for the following tasks:
+This repo is the official implementation of ["Self-Supervised Learning with Swin Transformers"](https://arxiv.org/abs/2105.04553). It currently includes code and models for the following tasks:
 
-> **Self-Supervised Pre-training and Linear Evaluation with MoBY and Swin Transformer**: Included in this repo. See [get_started.md](get_started.md) for a quick start.
+> **Self-Supervised Learning and Linear Evaluation**: Included in this repo. See [get_started.md](get_started.md) for a quick start.
 
 > **Object Detection and Instance Segmentation**: See [Swin Transformer for Object Detection](https://github.com/SwinTransformer/Swin-Transformer-Object-Detection).
 
@@ -16,14 +16,14 @@ This repo is the official implementation of ["Self-Supervised Learning with Swin
 *** 05/11/2021 ***
 
 Initial Commits:
-1. Self-Supervised Pre-training models on ImageNet-1K([MoBY-Swin-T-300Ep](https://drive.google.com/file/d/1PS1Q0tAnUfBWLRPxh9iUrinAxeq7Y--u/view?usp=sharing), [MoBY-Swin-T-300Ep-Linear](https://drive.google.com/file/d/1gbQynZy07uXPO-c0tOLeyG1pQzlnVHx9/view?usp=sharing)) are provided.
+1. Self-Supervised Pre-training models on ImageNet-1K ([MoBY-Swin-T-300Ep](https://drive.google.com/file/d/1PS1Q0tAnUfBWLRPxh9iUrinAxeq7Y--u/view?usp=sharing), [MoBY-Swin-T-300Ep-Linear](https://drive.google.com/file/d/1gbQynZy07uXPO-c0tOLeyG1pQzlnVHx9/view?usp=sharing)) are provided.
 2. The supported code and models for self-supervised pre-training and ImageNet-1K linear evaluation, COCO object detection and ADE20K semantic segmentation are provided.
 
 ## Introduction
 
 ### MoBY
 
-**MoBY** (the name `MoBY` stands for **Mo**Co v2 with **BY**OL) is initially described in [arxiv](), which is a combination of two popular self-supervised learning approaches: MoCo v2 and BYOL. It inherits the momentum design, the key queue, and the contrastive loss used in MoCo v2, and inherits the asymmetric encoders, asymmetric data augmentations and the momentum scheduler in BYOL.
+**MoBY** (the name `MoBY` stands for **Mo**Co v2 with **BY**OL) is initially described in [arxiv](https://arxiv.org/abs/2105.04553), which is a combination of two popular self-supervised learning approaches: MoCo v2 and BYOL. It inherits the momentum design, the key queue, and the contrastive loss used in MoCo v2, and inherits the asymmetric encoders, asymmetric data augmentations and the momentum scheduler in BYOL.
 
 **MoBY** achieves reasonably high accuracy on ImageNet-1K linear evaluation: 72.5\% and 75.0\% top-1 accuracy using DeiT and Swin-T, respectively, by 300-epoch training. The performance is on par with recent works of MoCo v3 and DINO which adopt DeiT as the backbone, but with much lighter tricks. 
 
@@ -73,12 +73,17 @@ Initial Commits:
 |  Swin-T  | UPerNet | MoBY  |  512x512  | 160K  | 44.06 |     45.58      |  60M   | 945G  |
 
 
-## Citing
+## Citing MoBY and Swin
 
 ### MoBY
 
 ```
-TBA
+@article{xie2021selfsupervised,
+  title={Self-Supervised Learning with Swin Transformers}, 
+  author={Zhenda Xie and Yutong Lin and Zhuliang Yao and Zheng Zhang and Qi Dai and Yue Cao and Han Hu},
+  journal={arXiv preprint arXiv:2105.04553},
+  year={2021}
+}
 ```
 
 ### Swin Transformer
@@ -97,4 +102,3 @@ TBA
 - For **Self-Supervised Pre-training and Linear Evaluation with MoBY and Swin Transformer**, please see [get_started.md](get_started.md) for detailed instructions.
 - For **Object Detection and Instance Segmentation**, please see [Swin Transformer for Object Detection](https://github.com/SwinTransformer/Swin-Transformer-Object-Detection).
 - For **Semantic Segmentation**, please see [Swin Transformer for Semantic Segmentation](https://github.com/SwinTransformer/Swin-Transformer-Semantic-Segmentation).
-
