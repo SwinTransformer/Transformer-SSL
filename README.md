@@ -80,7 +80,7 @@ Initial Commits:
 ### MoBY
 
 ```
-@article{xie2021selfsupervised,
+@article{xie2021moby,
   title={Self-Supervised Learning with Swin Transformers}, 
   author={Zhenda Xie and Yutong Lin and Zhuliang Yao and Zheng Zhang and Qi Dai and Yue Cao and Han Hu},
   journal={arXiv preprint arXiv:2105.04553},
