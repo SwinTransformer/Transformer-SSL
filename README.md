@@ -10,6 +10,11 @@ This repo is the official implementation of ["Self-Supervised Learning with Swin
 
 > **Transferring Performance on Semantic Segmentation**: See [Swin Transformer for Semantic Segmentation](https://github.com/SwinTransformer/Swin-Transformer-Semantic-Segmentation).
 
+## Highlights
+
+- **Include down-stream evaluation**: the `first work` to evaluate the transferring performance on down-stream tasks for SSL using Transformers
+- **Small tricks**: significantly less tricks than previous works, such as MoCo v3 and DINO
+- **High accuracy on ImageNet-1K linear evaluation**: 72.8 vs 72.5 (MoCo v3) vs 72.5 (DINO) using DeiT-S/16 using 300 epoch training
 
 ## Updates
 
