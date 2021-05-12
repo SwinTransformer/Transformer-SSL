@@ -4,7 +4,7 @@ By [Zhenda Xie](https://github.com/zdaxie/)\*, [Yutong Lin](https://github.com/i
 
 This repo is the official implementation of ["Self-Supervised Learning with Swin Transformers"](https://arxiv.org/abs/2105.04553). 
 
-**A important feature of this codebase is to include Swin Transformer as one of the backbones, such that we can evaluate the transferring performance of the learnt representations on down-stream tasks of object detection and semantic segmentation.** This evaluation is usually not included in previous works due to the use of ViT/DeiT, which has not been well tamed for down-stream tasks.
+**A important feature of this codebase is to include `Swin Transformer` as one of the backbones, such that we can evaluate the transferring performance of the learnt representations on down-stream tasks of object detection and semantic segmentation.** This evaluation is usually not included in previous works due to the use of ViT/DeiT, which has not been well tamed for down-stream tasks.
 
 It currently includes code and models for the following tasks:
 
