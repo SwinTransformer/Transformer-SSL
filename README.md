@@ -6,9 +6,9 @@ This repo is the official implementation of ["Self-Supervised Learning with Swin
 
 > **Self-Supervised Learning and Linear Evaluation**: Included in this repo. See [get_started.md](get_started.md) for a quick start.
 
-> **Object Detection and Instance Segmentation**: See [Swin Transformer for Object Detection](https://github.com/SwinTransformer/Swin-Transformer-Object-Detection).
+> **Transferring Performance on Object Detection/Instance Segmentation**: See [Swin Transformer for Object Detection](https://github.com/SwinTransformer/Swin-Transformer-Object-Detection).
 
-> **Semantic Segmentation**: See [Swin Transformer for Semantic Segmentation](https://github.com/SwinTransformer/Swin-Transformer-Semantic-Segmentation).
+> **Transferring Performance on Semantic Segmentation**: See [Swin Transformer for Semantic Segmentation](https://github.com/SwinTransformer/Swin-Transformer-Semantic-Segmentation).
 
 
 ## Updates
@@ -21,25 +21,22 @@ Initial Commits:
 
 ## Introduction
 
-### MoBY
+### MoBY: a self-supervised learning approach by combining MoCo v2 and BYOL
 
 **MoBY** (the name `MoBY` stands for **Mo**Co v2 with **BY**OL) is initially described in [arxiv](https://arxiv.org/abs/2105.04553), which is a combination of two popular self-supervised learning approaches: MoCo v2 and BYOL. It inherits the momentum design, the key queue, and the contrastive loss used in MoCo v2, and inherits the asymmetric encoders, asymmetric data augmentations and the momentum scheduler in BYOL.
 
-**MoBY** achieves reasonably high accuracy on ImageNet-1K linear evaluation: 72.5\% and 75.0\% top-1 accuracy using DeiT and Swin-T, respectively, by 300-epoch training. The performance is on par with recent works of MoCo v3 and DINO which adopt DeiT as the backbone, but with much lighter tricks. 
+**MoBY** achieves reasonably high accuracy on ImageNet-1K linear evaluation: 72.8\% and 75.0\% top-1 accuracy using DeiT and Swin-T, respectively, by 300-epoch training. The performance is on par with recent works of MoCo v3 and DINO which adopt DeiT as the backbone, but with much lighter tricks. 
 
 ![teaser_moby](figures/teaser_moby.png)
 
-### Swin Transformer
+### Swin Transformer as a backbone
 
-**Swin Transformer** (the name `Swin` stands for **S**hifted **win**dow) is initially described in [arxiv](https://arxiv.org/abs/2103.14030), which capably serves as a general-purpose backbone for computer vision. It is basically a hierarchical Transformer whose representation is computed with shifted windows. The shifted windowing scheme brings greater efficiency by limiting self-attention computation to non-overlapping local windows while also allowing for cross-window connection.
+**Swin Transformer** (the name `Swin` stands for **S**hifted **win**dow) is initially described in [arxiv](https://arxiv.org/abs/2103.14030), which capably serves as a general-purpose backbone for computer vision. It achieves strong performance on COCO object detection (`58.7 box AP` and `51.1 mask AP` on test-dev) and ADE20K semantic segmentation (`53.5 mIoU` on val), surpassing previous models by a large margin.
 
-**Swin Transformer** achieves strong performance on COCO object detection (`58.7 box AP` and `51.1 mask AP` on test-dev) and ADE20K semantic segmentation (`53.5 mIoU` on val), surpassing previous models by a large margin.
+We involve Swin Transformer as one of backbones to evaluate the transferring performance on down-stream tasks such as object detection. This differentiate this codebase with other approaches studying SSL on Transformer architectures.
 
-![teaser_swin](figures/teaser_swin.png)
+## ImageNet-1K linear evaluation
 
-## Main Results on ImageNet with Pretrained Models
-
-**ImageNet-1K and ImageNet-22K Pretrained Models**
 
 |      Method      | Architecture | Epochs | Params | FLOPs | img/s | Top-1 Accuracy |                                                                                            Checkpoint                                                                                            |
 | :--------------: | :----------: | :----: | :----: | :---: | :---: | :------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -52,7 +49,7 @@ Initial Commits:
 - <sup>1</sup> denotes the result of MoBY which has adopted a trick from MoCo v3 that replace theLayerNorm layers before the MLP blocks by BatchNorm.
 
 
-## Main Results on Downstream Tasks
+## Transferring to Downstream Tasks
 
 **COCO Object Detection (2017 val)**
 
@@ -102,5 +99,5 @@ Initial Commits:
 ## Getting Started
 
 - For **Self-Supervised Pre-training and Linear Evaluation with MoBY and Swin Transformer**, please see [get_started.md](get_started.md) for detailed instructions.
-- For **Object Detection and Instance Segmentation**, please see [Swin Transformer for Object Detection](https://github.com/SwinTransformer/Swin-Transformer-Object-Detection).
-- For **Semantic Segmentation**, please see [Swin Transformer for Semantic Segmentation](https://github.com/SwinTransformer/Swin-Transformer-Semantic-Segmentation).
+- For **Transferring Performance on Object Detection/Instance Segmentation**, please see [Swin Transformer for Object Detection](https://github.com/SwinTransformer/Swin-Transformer-Object-Detection).
+- For **Transferring Performance on Semantic Segmentation**, please see [Swin Transformer for Semantic Segmentation](https://github.com/SwinTransformer/Swin-Transformer-Semantic-Segmentation).
