@@ -80,7 +80,7 @@ def parse_option():
     config.LINEAR_EVAL.PRETRAINED = os.path.join(config.OUTPUT, 'checkpoint.pth')
     config.OUTPUT = os.path.join(config.OUTPUT, 'linear')
     # model
-    config.MODEL.TYPE = 'swin'
+    config.MODEL.TYPE = 'linear'
     config.MODEL.DROP_PATH_RATE = args.drop_path_rate
     # aug
     config.AUG.SSL_AUG = False
