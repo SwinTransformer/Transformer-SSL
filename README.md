@@ -57,10 +57,12 @@ We involve Swin Transformer as one of backbones to evaluate the transferring per
 |    Supervised    |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      81.2      |         [Here](https://github.com/microsoft/Swin-Transformer#main-results-on-imagenet-with-pretrained-models)          |
 |       MoBY       |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      70.9      |                                                        [TBA]()                                                         |
 | MoBY<sup>1</sup> |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      72.0      |                                                        [TBA]()                                                         |
-|       MoBY       |    DeiT-S    |  300   |  22M   | 4.6G  | 940.4 |      72.8      | [GoogleDrive](https://drive.google.com/file/d/18GtBXPPoofyPtNjDk0I3nk5nUb6Fj5HY/view?usp=sharing)/[GitHub]()/[Baidu]() | [GoogleDrive](https://drive.google.com/file/d/1AjjGfM7Wtfxdl3rqqOqcZ8i4j4u08Psr/view?usp=sharing)/[GitHub]()/[Baidu]() |
-|       MoBY       |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      75.3      | [GoogleDrive](https://drive.google.com/file/d/1PS1Q0tAnUfBWLRPxh9iUrinAxeq7Y--u/view?usp=sharing)/[GitHub]()/[Baidu]() | [GoogleDrive](https://drive.google.com/file/d/1gbQynZy07uXPO-c0tOLeyG1pQzlnVHx9/view?usp=sharing)/[GitHub]()/[Baidu]() |
+|       MoBY       |    DeiT-S    |  300   |  22M   | 4.6G  | 940.4 |      72.8      | [GoogleDrive](https://drive.google.com/file/d/18GtBXPPoofyPtNjDk0I3nk5nUb6Fj5HY/view?usp=sharing)/[GitHub](https://github.com/SwinTransformer/storage/releases/download/v1.0.3/moby_swin_t_300ep_pretrained.pth)/[Baidu](https://pan.baidu.com/s/18u1lmHHcis85VlH0lqQwHQ) | [GoogleDrive](https://drive.google.com/file/d/1AjjGfM7Wtfxdl3rqqOqcZ8i4j4u08Psr/view?usp=sharing)/[GitHub](https://github.com/SwinTransformer/storage/releases/download/v1.0.3/moby_swin_t_300ep_linear.pth)/[Baidu](https://pan.baidu.com/s/1OHLlV4gPsfS7twos4LfxrA) |
+|       MoBY       |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      75.3      | [GoogleDrive](https://drive.google.com/file/d/1PS1Q0tAnUfBWLRPxh9iUrinAxeq7Y--u/view?usp=sharing)/[GitHub](https://github.com/SwinTransformer/storage/releases/download/v1.0.3/moby_deit_small_300ep_pretrained.pth)/[Baidu](https://pan.baidu.com/s/1u3mMrJ4sPQ0t5J_e0l_YnQ) | [GoogleDrive](https://drive.google.com/file/d/1gbQynZy07uXPO-c0tOLeyG1pQzlnVHx9/view?usp=sharing)/[GitHub](https://github.com/SwinTransformer/storage/releases/download/v1.0.3/moby_deit_small_300ep_linear.pth)/[Baidu](https://pan.baidu.com/s/1NZiBcHS2nuHFGHX0D52Y6w) |
 
 - <sup>1</sup> denotes the result of MoBY which has adopted a trick from MoCo v3 that replace theLayerNorm layers before the MLP blocks by BatchNorm.
+
+- Access code for `baidu` is `moby`.
 
 
 ## Transferring to Downstream Tasks
