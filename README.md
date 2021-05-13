@@ -22,10 +22,15 @@ It currently includes code and models for the following tasks:
 
 ## Updates
 
-*** 05/11/2021 ***
+***05/13/2021***
+
+1. Self-Supervised models with DeiT-Small on ImageNet-1K ([MoBY-DeiT-Small-300Ep-Pretrained](https://drive.google.com/file/d/18GtBXPPoofyPtNjDk0I3nk5nUb6Fj5HY/view?usp=sharing), [MoBY-DeiT-Small-300Ep-Linear](https://drive.google.com/file/d/1AjjGfM7Wtfxdl3rqqOqcZ8i4j4u08Psr/view?usp=sharing)) are provided.
+2. The supporting code and config for self-supervised learning with DeiT-Small are provided.
+
+***05/11/2021***
 
 Initial Commits:
-1. Self-Supervised Pre-training models on ImageNet-1K ([MoBY-Swin-T-300Ep](https://drive.google.com/file/d/1PS1Q0tAnUfBWLRPxh9iUrinAxeq7Y--u/view?usp=sharing), [MoBY-Swin-T-300Ep-Linear](https://drive.google.com/file/d/1gbQynZy07uXPO-c0tOLeyG1pQzlnVHx9/view?usp=sharing)) are provided.
+1. Self-Supervised Pre-training models on ImageNet-1K ([MoBY-Swin-T-300Ep-Pretrained](https://drive.google.com/file/d/1PS1Q0tAnUfBWLRPxh9iUrinAxeq7Y--u/view?usp=sharing), [MoBY-Swin-T-300Ep-Linear](https://drive.google.com/file/d/1gbQynZy07uXPO-c0tOLeyG1pQzlnVHx9/view?usp=sharing)) are provided.
 2. The supported code and models for self-supervised pre-training and ImageNet-1K linear evaluation, COCO object detection and ADE20K semantic segmentation are provided.
 
 ## Introduction
@@ -34,7 +39,7 @@ Initial Commits:
 
 **MoBY** (the name `MoBY` stands for **Mo**Co v2 with **BY**OL) is initially described in [arxiv](https://arxiv.org/abs/2105.04553), which is a combination of two popular self-supervised learning approaches: MoCo v2 and BYOL. It inherits the momentum design, the key queue, and the contrastive loss used in MoCo v2, and inherits the asymmetric encoders, asymmetric data augmentations and the momentum scheduler in BYOL.
 
-**MoBY** achieves reasonably high accuracy on ImageNet-1K linear evaluation: 72.8\% and 75.0\% top-1 accuracy using DeiT and Swin-T, respectively, by 300-epoch training. The performance is on par with recent works of MoCo v3 and DINO which adopt DeiT as the backbone, but with much lighter tricks. 
+**MoBY** achieves reasonably high accuracy on ImageNet-1K linear evaluation: 72.8\% and 75.3\% top-1 accuracy using DeiT and Swin-T, respectively, by 300-epoch training. The performance is on par with recent works of MoCo v3 and DINO which adopt DeiT as the backbone, but with much lighter tricks. 
 
 ![teaser_moby](figures/teaser_moby.png)
 
@@ -47,13 +52,13 @@ We involve Swin Transformer as one of backbones to evaluate the transferring per
 ## ImageNet-1K linear evaluation
 
 
-|      Method      | Architecture | Epochs | Params | FLOPs | img/s | Top-1 Accuracy |                                                                                            Checkpoint                                                                                            |
-| :--------------: | :----------: | :----: | :----: | :---: | :---: | :------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|    Supervised    |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      81.2      |                                              [Here](https://github.com/microsoft/Swin-Transformer#main-results-on-imagenet-with-pretrained-models)                                               |
-|       MoBY       |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      70.9      |                                                                                             [TBA]()                                                                                              |
-| MoBY<sup>1</sup> |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      72.0      |                                                                                             [TBA]()                                                                                              |
-|       MoBY       |    DeiT-S    |  300   |  22M   | 4.6G  | 940.4 |      72.8      |                                                                                             [TBA]()                                                                                              |
-|       MoBY       |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      75.0      | [Pre-trained](https://drive.google.com/file/d/1PS1Q0tAnUfBWLRPxh9iUrinAxeq7Y--u/view?usp=sharing) / [Linear](https://drive.google.com/file/d/1gbQynZy07uXPO-c0tOLeyG1pQzlnVHx9/view?usp=sharing) |
+|      Method      | Architecture | Epochs | Params | FLOPs | img/s | Top-1 Accuracy |                                                 Pre-trained Checkpoint                                                 |                                                   Linear Checkpoint                                                    |
+| :--------------: | :----------: | :----: | :----: | :---: | :---: | :------------: | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
+|    Supervised    |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      81.2      |         [Here](https://github.com/microsoft/Swin-Transformer#main-results-on-imagenet-with-pretrained-models)          |
+|       MoBY       |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      70.9      |                                                        [TBA]()                                                         |
+| MoBY<sup>1</sup> |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      72.0      |                                                        [TBA]()                                                         |
+|       MoBY       |    DeiT-S    |  300   |  22M   | 4.6G  | 940.4 |      72.8      | [GoogleDrive](https://drive.google.com/file/d/18GtBXPPoofyPtNjDk0I3nk5nUb6Fj5HY/view?usp=sharing)/[GitHub]()/[Baidu]() | [GoogleDrive](https://drive.google.com/file/d/1AjjGfM7Wtfxdl3rqqOqcZ8i4j4u08Psr/view?usp=sharing)/[GitHub]()/[Baidu]() |
+|       MoBY       |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      75.3      | [GoogleDrive](https://drive.google.com/file/d/1PS1Q0tAnUfBWLRPxh9iUrinAxeq7Y--u/view?usp=sharing)/[GitHub]()/[Baidu]() | [GoogleDrive](https://drive.google.com/file/d/1gbQynZy07uXPO-c0tOLeyG1pQzlnVHx9/view?usp=sharing)/[GitHub]()/[Baidu]() |
 
 - <sup>1</sup> denotes the result of MoBY which has adopted a trick from MoCo v3 that replace theLayerNorm layers before the MLP blocks by BatchNorm.
 

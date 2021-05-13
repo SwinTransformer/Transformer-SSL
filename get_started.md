@@ -6,13 +6,13 @@ This folder contains the implementation of the `MoBY` with `Swin Transformer` fo
 
 ### ImageNet-1K Linear Evaluation Results
 
-|      Method      | Architecture | Epochs | Params | FLOPs | img/s | Top-1 Accuracy |                                                                                            Checkpoint                                                                                            |
-| :--------------: | :----------: | :----: | :----: | :---: | :---: | :------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|    Supervised    |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      81.2      |                                              [Here](https://github.com/microsoft/Swin-Transformer#main-results-on-imagenet-with-pretrained-models)                                               |
-|       MoBY       |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      70.9      |                                                                                             [TBA]()                                                                                              |
-| MoBY<sup>1</sup> |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      72.0      |                                                                                             [TBA]()                                                                                              |
-|       MoBY       |    DeiT-S    |  300   |  22M   | 4.6G  | 940.4 |      72.8      |                                                                                             [TBA]()                                                                                              |
-|       MoBY       |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      75.0      | [Pre-trained](https://drive.google.com/file/d/1PS1Q0tAnUfBWLRPxh9iUrinAxeq7Y--u/view?usp=sharing) / [Linear](https://drive.google.com/file/d/1gbQynZy07uXPO-c0tOLeyG1pQzlnVHx9/view?usp=sharing) |
+|      Method      | Architecture | Epochs | Params | FLOPs | img/s | Top-1 Accuracy |                                                 Pre-trained Checkpoint                                                 |                                                   Linear Checkpoint                                                    |
+| :--------------: | :----------: | :----: | :----: | :---: | :---: | :------------: | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
+|    Supervised    |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      81.2      |         [Here](https://github.com/microsoft/Swin-Transformer#main-results-on-imagenet-with-pretrained-models)          |
+|       MoBY       |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      70.9      |                                                        [TBA]()                                                         |
+| MoBY<sup>1</sup> |    Swin-T    |  100   |  28M   | 4.5G  | 755.2 |      72.0      |                                                        [TBA]()                                                         |
+|       MoBY       |    DeiT-S    |  300   |  22M   | 4.6G  | 940.4 |      72.8      | [GoogleDrive](https://drive.google.com/file/d/18GtBXPPoofyPtNjDk0I3nk5nUb6Fj5HY/view?usp=sharing)/[GitHub]()/[Baidu]() | [GoogleDrive](https://drive.google.com/file/d/1AjjGfM7Wtfxdl3rqqOqcZ8i4j4u08Psr/view?usp=sharing)/[GitHub]()/[Baidu]() |
+|       MoBY       |    Swin-T    |  300   |  28M   | 4.5G  | 755.2 |      75.3      | [GoogleDrive](https://drive.google.com/file/d/1PS1Q0tAnUfBWLRPxh9iUrinAxeq7Y--u/view?usp=sharing)/[GitHub]()/[Baidu]() | [GoogleDrive](https://drive.google.com/file/d/1gbQynZy07uXPO-c0tOLeyG1pQzlnVHx9/view?usp=sharing)/[GitHub]()/[Baidu]() |
 
 - <sup>1</sup> denotes the result of MoBY which has adopted a trick from MoCo v3 that replace theLayerNorm layers before the MLP blocks by BatchNorm.
 
@@ -146,13 +146,20 @@ python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --maste
   `--opts TRAIN.EPOCHS 100 TRAIN.WARMUP_EPOCHS 5` will change total epochs to 100 and warm-up epochs to 5.
 - For additional options, see [config](config.py) and run `python moby_main.py --help` to get detailed message.
 
-For example, to train `MoBY` with `Swin Transformer` with 8 GPU on a single node for 300 epochs, run:
+For example, to train `MoBY` with Vision Transformers with 8 GPU on a single node for 300 epochs, run:
 
 `MoBY Swin-T`:
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345  moby_main.py \
 --cfg configs/moby_swin_tiny.yaml --data-path <imagenet-path> --batch-size 64
+```
+
+`MoBY DeiT-Small`
+
+```bash
+python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345  moby_main.py \
+--cfg configs/moby_deit_small.yaml --data-path <imagenet-path> --batch-size 64
 ```
 
 ### Linear Evaluation
